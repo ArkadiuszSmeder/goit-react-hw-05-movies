@@ -26,13 +26,6 @@ export const Modal = ({ image }) => {
     };
 
     document.addEventListener('keydown', handleEsc);
-
-    // return () => {
-    //   document.removeEventListener('keydown', handleEsc);
-    //   if (instance.visible()) {
-    //     instance.close();
-    //   }
-    // };
   }, [image]);
 };
 
