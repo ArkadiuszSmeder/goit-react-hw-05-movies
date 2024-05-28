@@ -1,50 +1,28 @@
-import React, { useState } from "react";
-import { AppContainer, ButtonContainer } from "styled/styled-appContainer";
-import { ImageGallery } from './components/ImageGallery';
-import { Searchbar } from 'components/Searchbar';
-import { Button } from 'components/Button';
-import { useQuery } from 'react-query'
-import { getImages } from 'utils/getImages'
+import { lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+import { SharedLayout } from "components/SharedLayout";
 
+const About = lazy(() => import("pages/About"));
+const Home = lazy(() => import("pages/Home"));
+const ProductDetails = lazy(() => import("pages/ProductDetails"));
+const Products = lazy(() => import("pages/Products"));
+const Mission = lazy(() => import("components/Mission"));
+const Team = lazy(() => import("components/Team"));
+const Reviews = lazy(() => import("components/Reviews"));
 
-function App() {
-  
-  const [queryWord, setQueryWord] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const [allImages, setAllImages] = useState([]); // Dodaje stan przechowujący wszystkie obrazy
-  const [totalHits, setTotalHits] = useState(0);
-  const query = useQuery({
-    queryKey: ['image-gallery', queryWord, currentPage],
-    queryFn: () => getImages(queryWord, currentPage),
-    onSuccess: (imageGallery) => {
-      // Dodaje nowe obrazy do istniejącej kolekcji obrazków
-      setAllImages((prevImages) => [...prevImages, ...imageGallery.hits]);
-      setTotalHits(imageGallery.totalHits);
-    }
-  });
-
-  const { isLoading, error } = query;
-
-  const handleSearch = (value) => {
-    setQueryWord(value);
-    setCurrentPage(1); // Resetowanie numeru strony przy każdym nowym wyszukiwaniu
-    setAllImages([]);
-  };
-
-  const handleLoadMore = () => {
-    setCurrentPage(prevPageCount => prevPageCount + 1);
-  };
-
+export const App = () => {
   return (
-    <AppContainer>
-      <Searchbar onSubmit={handleSearch}/>
-        <ImageGallery allImages={allImages} isLoading={isLoading} error={error}/>
-        <ButtonContainer>
-          {totalHits > 12 && allImages.length < totalHits && (<Button onClick={handleLoadMore}/>)}
-        </ButtonContainer>
-    </AppContainer>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />}>
+          <Route path="mission" element={<Mission />} />
+          <Route path="team" element={<Team />} />
+          <Route path="reviews" element={<Reviews />} />
+        </Route>
+        <Route path="products" element={<Products />} />
+        <Route path="products/:id" element={<ProductDetails />} />
+      </Route>
+    </Routes>
   );
-}
-
-export default App;
+};
