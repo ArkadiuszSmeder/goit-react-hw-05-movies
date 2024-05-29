@@ -1,14 +1,14 @@
 import { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { SharedLayout } from "components/SharedLayout";
 
-const About = lazy(() => import("pages/About"));
-const Home = lazy(() => import("pages/Home"));
-const ProductDetails = lazy(() => import("pages/ProductDetails"));
-const Products = lazy(() => import("pages/Products"));
-const Mission = lazy(() => import("components/Mission"));
-const Team = lazy(() => import("components/Team"));
-const Reviews = lazy(() => import("components/Reviews"));
+const About = lazy(() => import("./pages/About"));
+const Home = lazy(() => import("./pages/Home"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
+const Products = lazy(() => import("./pages/Products"));
+const Mission = lazy(() => import("./components/Mission"));
+const Team = lazy(() => import("./components/Team"));
+const Reviews = lazy(() => import("./components/Reviews"));
 
 export const App = () => {
   return (
@@ -22,6 +22,7 @@ export const App = () => {
         </Route>
         <Route path="products" element={<Products />} />
         <Route path="products/:id" element={<ProductDetails />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>
   );

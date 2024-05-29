@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Link, Outlet } from "react-router-dom";
 
-export const About = () => {
+const About = () => {
   return (
     <main>
       <h1>About Us</h1>
@@ -35,3 +35,5 @@ export const About = () => {
     </main>
   );
 };
+
+export default About;
