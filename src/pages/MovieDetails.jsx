@@ -1,4 +1,4 @@
-import { useParams, useLocation, Outlet, Link, useNavigate } from "react-router-dom";
+import { useParams, useLocation, Outlet, Link } from "react-router-dom";
 import { BackLink } from "../components/BackLink";
 import React, { useState, Suspense } from 'react';
 import { useQuery } from "react-query";
@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 const MovieDetails = () => {
 
   const { movieId } = useParams(); // używa parametru movieId do wyszukiwania w funkcji getMovieById - zaszyty w App i Home
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const getMovieById = async () => {
 
@@ -77,7 +77,7 @@ const MovieDetails = () => {
 export default MovieDetails;
 
 
-{/* <button onClick={() => navigate(-1)}>
+/* <button onClick={() => navigate(-1)}>
 Go Back
-</button> */}
+</button> */
 // button cofającyy
