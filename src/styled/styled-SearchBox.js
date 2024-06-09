@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Input = styled.input`
-  padding: 8px 32px 8px 8px;
+  // padding: 8px 32px 8px 8px;
   border-radius: 4px;
   font: inherit;
 `;

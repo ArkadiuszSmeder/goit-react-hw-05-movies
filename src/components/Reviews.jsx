@@ -1,25 +1,49 @@
-const Reviews = () => {
-  return (
-    <section>
-      <div>
-        <h2>First review - 4.6/5</h2>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem harum
-          architecto sapiente corporis, voluptatem quas voluptatibus fugiat
-          nulla commodi quidem, dolorem distinctio inventore blanditiis illo
-          tenetur aut enim ex laborum!
-        </p>
-      </div>
-      <div>
-        <h2>Second review - 4.8/5</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-          nihil ea, eaque fugit amet possimus officiis asperiores aperiam facere
-          et?
-        </p>
-      </div>
-    </section>
-  );
-};
+import { useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import { useQuery } from "react-query";
 
-export default Reviews;
+const Reviews = () => {
+
+  const { movieId } = useParams(); // używa parametru movieId do wyszukiwania w funkcji getMovieById - zaszyty w App i Home
+
+  const getMovieReviews = async () => {
+
+    const query = `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=fcef3f7d90b41f3f85ee0cce371ea367`
+    const response = await fetch(query)
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    return response.json()
+  }
+
+  const [movieReviews, setMovieReviews] = useState([]) // hook do przechowywania informacji o obsadzie
+
+  useQuery({
+    queryKey: ['movie-reviews', movieId],
+    queryFn: () => getMovieReviews(),
+    onSuccess: (movieReviews) => {
+      setMovieReviews(movieReviews.results)
+      console.log(movieReviews)
+    }
+  });
+
+    return (
+      <section>
+        <h2>Reviews</h2>
+        {movieReviews && movieReviews.length > 0 ? (
+            <ul>
+            {movieReviews.map(review => (
+            <li key={review.id} style={{ marginBottom: '25px' }}>
+                <div>{review.author}</div>
+                <div>{review.content}</div>
+            </li>
+            ))}
+            </ul>
+        ) : (
+        <p>No reviews for this movie yet</p>
+        )}
+      </section>
+    );
+  };
+  
+  export default Reviews;
