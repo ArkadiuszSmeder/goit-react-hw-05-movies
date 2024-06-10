@@ -45,6 +45,7 @@ const Movies = () => {
     if (movieName) {
       refetch();
     }
+    // eslint-disable-next-line
   }, []); //zwraca liste filmów przy cofnięciu do poprzedniej strony - pusta tablica dependencies
 
   return (
