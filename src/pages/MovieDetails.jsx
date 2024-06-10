@@ -80,4 +80,4 @@ export default MovieDetails;
 /* <button onClick={() => navigate(-1)}>
 Go Back
 </button> */
-// button cofającyy
+// button cofający
