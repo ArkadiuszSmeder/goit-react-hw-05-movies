@@ -45,7 +45,7 @@ const Movies = () => {
     if (movieName) {
       refetch();
     }
-  }, [movieName, refetch]); //zwraca liste filmów przy cofnięciu do poprzedniej strony - pusta tablica dependencies
+  }, []); //zwraca liste filmów przy cofnięciu do poprzedniej strony - pusta tablica dependencies
 
   return (
     <main>
